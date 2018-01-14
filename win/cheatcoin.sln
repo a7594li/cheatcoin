@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cheatcoin", "cheatcoin\cheatcoin.vcxproj", "{8F05F6FF-AA25-4D79-AB2D-886BA8976393}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cheatcoin", "cheatcoin.vcxproj", "{8F05F6FF-AA25-4D79-AB2D-886BA8976393}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cheatcoinwallet", "cheatcoinwallet\cheatcoinwallet.vcxproj", "{EDACF749-CA11-48F7-806A-D39748389856}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cheatcoinwallet", "gui\cheatcoinwallet.vcxproj", "{EDACF749-CA11-48F7-806A-D39748389856}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

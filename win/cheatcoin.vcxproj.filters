@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\cheatcoin\block.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\crypt.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\hash.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\log.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\address.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\main.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\pool.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\sha256.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\storage.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\sync.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\transport.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\wallet.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dnet\dnet_command.c">
+      <Filter>dnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dnet\dnet_connection.c">
+      <Filter>dnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dnet\dnet_crypt.c">
+      <Filter>dnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dnet\dnet_database.c">
+      <Filter>dnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dnet\dnet_files.c">
+      <Filter>dnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dnet\dnet_log.c">
+      <Filter>dnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dnet\dnet_main.c">
+      <Filter>dnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dnet\dnet_packet.c">
+      <Filter>dnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dnet\dnet_stream.c">
+      <Filter>dnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dnet\dnet_tap.c">
+      <Filter>dnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dnet\dnet_threads.c">
+      <Filter>dnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dus\programs\dar\source\lib\crc_c.c">
+      <Filter>dus\dar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dus\programs\dfstools\source\lib\dfsrsa.c">
+      <Filter>dus\dfstools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dus\programs\dfstools\source\dfslib\dfslib_crypt.c">
+      <Filter>dus\dfstools\dfslib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dus\programs\dfstools\source\dfslib\dfslib_random.c">
+      <Filter>dus\dfstools\dfslib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dus\programs\dfstools\source\dfslib\dfslib_string.c">
+      <Filter>dus\dfstools\dfslib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\netdb.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+    <ClCompile Include="system.c">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cheatcoin\memory.c">
+      <Filter>cheatcoin</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\cheatcoin\version.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\address.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\block.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\crypt.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\hash.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\log.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\main.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\win32\cheatcoin\cheatcoin\netdb.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\netdb.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\pool.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\sha256.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\state.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\storage.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\sync.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\system.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\transport.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\wallet.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_command.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_connection.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_crypt.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_database.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_files.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_history.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_log.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_main.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_packet.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_stream.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_tap.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dnet_threads.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\dthread.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dnet\system.h">
+      <Filter>dnet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dus\programs\dar\source\include\crc.h">
+      <Filter>dus\dar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dus\programs\dfstools\source\include\dfsrsa.h">
+      <Filter>dus\dfstools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dus\programs\dfstools\source\dfslib\dfslib_crypt.h">
+      <Filter>dus\dfstools\dfslib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dus\programs\dfstools\source\dfslib\dfslib_random.h">
+      <Filter>dus\dfstools\dfslib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dus\programs\dfstools\source\dfslib\dfslib_string.h">
+      <Filter>dus\dfstools\dfslib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dus\programs\dfstools\source\dfslib\dfslib_types.h">
+      <Filter>dus\dfstools\dfslib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ldus\source\include\ldus\atomic.h">
+      <Filter>ldus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ldus\source\include\ldus\list.h">
+      <Filter>ldus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ldus\source\include\ldus\rbtree.h">
+      <Filter>ldus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\win32\cheatcoin\cheatcoin\termios.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\win32\cheatcoin\cheatcoin\unistd.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="arpa\inet.h">
+      <Filter>win\arpa</Filter>
+    </ClInclude>
+    <ClInclude Include="netinet\in.h">
+      <Filter>win\netinet</Filter>
+    </ClInclude>
+    <ClInclude Include="sys\ioctl.h">
+      <Filter>win\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="sys\resource.h">
+      <Filter>win\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="sys\socket.h">
+      <Filter>win\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="sys\time.h">
+      <Filter>win\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cheatcoin\memory.h">
+      <Filter>cheatcoin</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="cheatcoin">
+      <UniqueIdentifier>{b4a2c1ea-0a7a-4e6d-8ad6-d033c6675a2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dnet">
+      <UniqueIdentifier>{6080fbd5-f587-4bd7-9174-02d61da8e4f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dus">
+      <UniqueIdentifier>{85dd74fa-fb93-474d-a465-40dce69837d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dus\dar">
+      <UniqueIdentifier>{f5ca642c-bb88-49e7-af0b-0385d26db9a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dus\dfstools">
+      <UniqueIdentifier>{d101db5e-0d7c-47c5-a100-ca5dec212a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dus\dfstools\dfslib">
+      <UniqueIdentifier>{25b8673f-2ce8-4930-a873-1822bb712853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ldus">
+      <UniqueIdentifier>{b340c390-8ae1-412b-8d59-6f09fc788639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win">
+      <UniqueIdentifier>{3f084a6e-eeab-41b0-bb1f-591a0a88af80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\arpa">
+      <UniqueIdentifier>{96297f0c-80dc-4697-8140-049772a2dfa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\netinet">
+      <UniqueIdentifier>{6aa80f71-028c-47d8-bc28-28bf12d84453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\sys">
+      <UniqueIdentifier>{54060f64-6169-4c84-9d73-06dd375c0fd1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
