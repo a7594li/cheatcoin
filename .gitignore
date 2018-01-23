@@ -1,0 +1,6 @@
+/win/packages/
+/win/.vs/
+/win/cheatcoin.VC.db
+/win/cheatcoin.vcxproj.user
+/win/gui/cheatcoinwallet.vcxproj.user
+/win/x64/
