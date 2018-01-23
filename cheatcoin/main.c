@@ -1,4 +1,4 @@
-/* cheatcoin main, T13.654-T13.819 $DVS:time$ */
+/* cheatcoin main, T13.654-T13.847 $DVS:time$ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,23 +59,30 @@ static long double amount2cheatcoins(cheatcoin_amount_t amount) {
 		if (amount & 1) res += d;
 		if (i < 32) res /= 2; else d *= 2;
 	}
-	return res;
+	return floorl(res * 1000000000) / 1000000000;
+}
+
+static long double diff2log(cheatcoin_diff_t diff) {
+	long double res = (long double)cheatcoin_diff_to64(diff);
+	cheatcoin_diff_shr32(&diff);
+	cheatcoin_diff_shr32(&diff);
+	if (cheatcoin_diff_to64(diff)) res += ldexpl((long double)cheatcoin_diff_to64(diff), 64);
+	return (res > 0 ? logl(res) : 0);
 }
 
 static long double hashrate(cheatcoin_diff_t *diff) {
-	cheatcoin_diff_t sum;
+	long double sum = 0;
 	int i;
-	memset(&sum, 0, sizeof(sum));
-	for (i = 0; i < HASHRATE_LAST_MAX_TIME; ++i) sum = cheatcoin_diff_add(sum, diff[i]);
-	cheatcoin_diff_shr32(&sum);
-	return amount2cheatcoins(cheatcoin_diff_to64(sum));
+	for (i = 0; i < HASHRATE_LAST_MAX_TIME; ++i) sum += diff2log(diff[i]);
+	sum /= HASHRATE_LAST_MAX_TIME;
+	return ldexpl(expl(sum), -58);
 }
 
 static cheatcoin_amount_t cheatcoins2amount(const char *str) {
 	long double sum, flr;
 	cheatcoin_amount_t res;
 	int i;
-	if (sscanf(str, "%Lf", &sum) != 1 || sum < 0) return 0;
+	if (sscanf(str, "%Lf", &sum) != 1 || sum <= 0) return 0;
 	flr = floorl(sum);
 	res = (cheatcoin_amount_t)flr << 32;
 	sum -= flr;
@@ -168,7 +175,8 @@ int cheatcoin_do_xfer(void *outv, const char *amount, const char *address) {
 	xfer.remains = cheatcoins2amount(amount);
 	if (!xfer.remains) { if (out) fprintf(out, "Xfer: nothing to transfer.\n"); return 1; }
 	if (xfer.remains > cheatcoin_get_balance(0)) { if (out) fprintf(out, "Xfer: balance too small.\n"); return 1; }
-	cheatcoin_address2hash(address, xfer.fields[XFER_MAX_IN].hash);
+	if (cheatcoin_address2hash(address, xfer.fields[XFER_MAX_IN].hash))
+		{ if (out) fprintf(out, "Xfer: incorrect address.\n"); return 1; }
 	cheatcoin_wallet_default_key(&xfer.keys[XFER_MAX_IN]);
 	xfer.outsig = 1;
 	g_cheatcoin_state = CHEATCOIN_STATE_XFER;
@@ -308,6 +316,53 @@ static int cheatcoin_command(char *cmd, FILE *out) {
 	return 0;
 }
 
+struct out_balances_data {
+	struct cheatcoin_field *blocks;
+	unsigned nblocks, maxnblocks;
+};
+
+static int out_balances_callback(void *data, cheatcoin_hash_t hash, cheatcoin_amount_t amount, cheatcoin_time_t time) {
+	struct out_balances_data *d = (struct out_balances_data *)data;
+	struct cheatcoin_field f;
+	memcpy(f.hash, hash, sizeof(cheatcoin_hashlow_t));
+	f.amount = amount;
+	if (!f.amount) return 0;
+	if (d->nblocks == d->maxnblocks) {
+		d->maxnblocks = (d->maxnblocks ? d->maxnblocks * 2 : 0x100000);
+		d->blocks = realloc(d->blocks, d->maxnblocks * sizeof(struct cheatcoin_field));
+	}
+	memcpy(d->blocks + d->nblocks, &f, sizeof(struct cheatcoin_field));
+	d->nblocks++;
+	return 0;
+}
+
+static int out_sort_callback(const void *l, const void *r) {
+	return strcmp(cheatcoin_hash2address(((struct cheatcoin_field *)l)->data),
+				  cheatcoin_hash2address(((struct cheatcoin_field *)r)->data));
+}
+
+static void *add_block_callback(void *block, void *data) {
+	unsigned *i = (unsigned *)data;
+	cheatcoin_add_block((struct cheatcoin_block *)block);
+	if (!(++*i % 10000)) printf("blocks: %u\n", *i);
+	return 0;
+}
+
+static int out_balances(void) {
+	struct out_balances_data d;
+	unsigned i = 0;
+	cheatcoin_set_log_level(0);
+	xdag_mem_init((cheatcoin_main_time() - cheatcoin_start_main_time()) << 17);
+	cheatcoin_crypt_init(0);
+	memset(&d, 0, sizeof(struct out_balances_data));
+	cheatcoin_load_blocks(cheatcoin_start_main_time() << 16, cheatcoin_main_time() << 16, &i, add_block_callback);
+	cheatcoin_traverse_all_blocks(&d, out_balances_callback);
+	qsort(d.blocks, d.nblocks, sizeof(struct cheatcoin_field), out_sort_callback);
+	for (i = 0; i < d.nblocks; ++i)
+		printf("%s  %20.9Lf\n", cheatcoin_hash2address(d.blocks[i].data), amount2cheatcoins(d.blocks[i].amount));
+	return 0;
+}
+
 static int terminal(void) {
 #if !defined(_WIN32) && !defined(_WIN64)
 	char cmd[CHEATCOIN_COMMAND_MAX], cmd2[CHEATCOIN_COMMAND_MAX], *ptr, *lasts;
@@ -373,12 +428,13 @@ int cheatcoin_main(int argc, char **argv) {
 #else
 int main(int argc, char **argv) {
 #endif
-	const char *addrports[256], *bindto = 0, *pubaddr = 0, *pool_arg = 0;
+	const char *addrports[256], *bindto = 0, *pubaddr = 0, *pool_arg = 0, *miner_address = 0;
 	char *ptr;
-	int transport_flags = 0, n_addrports = 0, n_mining_threads = 0, is_pool = 0, is_miner = 0, i;
+	int transport_flags = 0, n_addrports = 0, n_mining_threads = 0, is_pool = 0, is_miner = 0, i, level;
 	pthread_t th;
 #if !defined(_WIN32) && !defined(_WIN64)
 	signal(SIGPIPE, SIG_IGN);
+	signal(SIGWINCH, SIG_IGN);
 #endif
 	g_progname = strdup(argv[0]);
 	while ((ptr = strchr(g_progname, '/')) || (ptr = strchr(g_progname, '\\'))) g_progname = ptr + 1;
@@ -394,6 +450,9 @@ int main(int argc, char **argv) {
 	if (argc <= 1) goto help;
 	for (i = 1; i < argc; ++i) {
 		if (argv[i][0] == '-' && argv[i][1] && !argv[i][2]) switch(argv[i][1]) {
+			case 'a':
+				if (++i < argc) miner_address = argv[i];
+				break;
 			case 'c':
 				if (++i < argc && n_addrports < 256)
 					addrports[n_addrports++] = argv[i];
@@ -408,10 +467,12 @@ int main(int argc, char **argv) {
 				printf("Usage: %s flags [pool_ip:port]\n"
 					"If pool_ip:port argument is given, then the node operates as a miner.\n"
 					"Flags:\n"
+					"  -a address     - specify your address to use in the miner\n"
 					"  -c ip:port     - address of another cheatcoin full node to connect\n"
 					"  -d             - run as daemon (default is interactive mode)\n"
 					"  -h             - print this help\n"
 					"  -i             - run as interactive terminal for daemon running in this folder\n"
+					"  -l             - output non zero balances of all accounts\n"
 					"  -m N           - use N CPU mining threads (default is 0)\n"
 					"  -p ip:port     - public address of this node\n"
 				    "  -P ip:port:CFG - run the pool, bind to ip:port, CFG is miners:fee:reward:direct:maxip:fund\n"
@@ -424,13 +485,18 @@ int main(int argc, char **argv) {
 				    "  -r             - load local blocks and wait for 'run' command to continue\n"
 					"  -s ip:port     - address of this node to bind to\n"
 					"  -t             - connect to test net (default is main net)\n"
+					"  -v N           - set loglevel to N\n"
 				, argv[0]);
 				return 0;
 		    case 'i':
 			    return terminal();
-		    case 'm':
-				if (++i < argc)
+			case 'l':
+				return out_balances();
+			case 'm':
+				if (++i < argc) {
 					sscanf(argv[i], "%d", &n_mining_threads);
+					if (n_mining_threads < 0) n_mining_threads = 0;
+				}
 				break;
 			case 'p':
 			    if (++i < argc)
@@ -449,6 +515,11 @@ int main(int argc, char **argv) {
 				break;
 			case 't':
 				g_cheatcoin_testnet = 1;
+				break;
+			case 'v':
+				if (++i < argc && sscanf(argv[i], "%d", &level) == 1)
+					cheatcoin_set_log_level(level);
+				else { printf("Illevel use of option -v\n"); return -1; }
 				break;
 			default:
 				goto help;
@@ -483,15 +554,15 @@ int main(int argc, char **argv) {
 		if (cheatcoin_netdb_init(pubaddr, n_addrports, addrports)) return -1;
 	}
 	cheatcoin_mess("Initializing cryptography...");
-	if (cheatcoin_crypt_init()) return -1;
+	if (cheatcoin_crypt_init(1)) return -1;
 	cheatcoin_mess("Reading wallet...");
 	if (cheatcoin_wallet_init()) return -1;
 	cheatcoin_mess("Initializing addresses...");
 	if (cheatcoin_address_init()) return -1;
 	cheatcoin_mess("Starting blocks engine...");
-	if (cheatcoin_blocks_start(is_miner ? ~n_mining_threads : n_mining_threads)) return -1;
+	if (cheatcoin_blocks_start((is_miner ? ~n_mining_threads : n_mining_threads), !!miner_address)) return -1;
 	cheatcoin_mess("Starting pool engine...");
-	if (cheatcoin_pool_start(is_pool, pool_arg)) return -1;
+	if (cheatcoin_pool_start(is_pool, pool_arg, miner_address)) return -1;
 #ifndef CHEATCOINWALLET
 	cheatcoin_mess("Starting terminal server...");
 	if (pthread_create(&th, 0, &terminal_thread, 0)) return -1;

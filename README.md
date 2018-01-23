@@ -1,7 +1,7 @@
 The Dagger (XDAG) cryptocurrency
 ================================
 
-- Official site: http://cheatcoin.atwebpages.com
+- Official site: http://xdag.me
 - Main net is launched January 5, 2018 at 22:45 GMT. 
 
 
@@ -26,17 +26,16 @@ Install and run (Linux):
 
 - Clone from the git repository:
 
-        $ git clone https://github.com/cheatoshin/cheatcoin.git
+        $ git clone https://github.com/cheatoshin/xdag.git
 
 - Make:
 
-        $ cd cheatcoin/cheatcoin
+        $ cd xdag/cheatcoin
         $ make
 
-- Run, for example, the miner with 2 CPU mining threads, in daemon mode, connected to the pool 52.5.32.68:13654
-  (for testnet the -t flag is also to be added):
+- Run, for example, the miner with 2 CPU mining threads, in daemon mode, connected to the pool xdag.me:13654
 
-        $ ./xdag -m 2 -d 52.5.32.68:13654
+        $ ./xdag -m 2 -d xdag.me:13654
         Enter random characters: [enter]
 
 - Run terminal connected to the daemon in the same folder:
@@ -81,7 +80,7 @@ Daggers are mined in every main block.
 For first 4 years 1024 XDAG are mined in each main block.
 For second 4 years - 512 XDAG, and so on.
 So, maximum XDAG supply is approximately power(2,32).
-Each dagger is equal to power(2,32) dagoshi.
+Each dagger is equal to power(2,32) cheatoshino.
 Transaction is _valid_ if it is referenced by a main block.
 Valid transactions are strictly ordered depending on main chain and links order.
 Double spending is prohibited because only first concurrent transaction (by this order) is applied.
@@ -115,3 +114,17 @@ Transport layer:
 ---------------
 
 The dnet network is used as transport layer.
+
+
+Updates:
+---------------
+
+Replacement SHA256 transform code from openssl project,
+modified by true ( XDAG rvKaJSbP9DE6sg6XetYtSpaK+2aDbUq8 )
+
+- 50-150% speedup on Intel Core series post-Nehalem
+- 50-100% speedup on AMD Heavy Equipment cores
+- 400-500% speedup on Ryzen
+- Better use of threads than reference implementation
+
+Heat output is increased with the fast version, so you may want to continue using the old implementation on devices with poor cooling (notebooks, etc).

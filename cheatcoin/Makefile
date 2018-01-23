@@ -1,4 +1,4 @@
-# cheatcoin: Makefile; T13.656-T13.816; $DVS:time$
+# cheatcoin: Makefile; T13.656-T13.844; $DVS:time$
 
 dnet	 = ../dnet
 dfstools = ../dus/programs/dfstools/source
@@ -17,10 +17,12 @@ sources = \
 	netdb.c						\
 	pool.c						\
 	sha256.c					\
+	sha256-mb-x86_64.s                              \
 	storage.c					\
 	sync.c						\
 	transport.c					\
 	wallet.c					\
+	x86_64cpuid.s					\
 	$(dnet)/dnet_crypt.c		\
 	$(dnet)/dnet_database.c		\
 	$(dnet)/dnet_main.c			\
@@ -78,13 +80,13 @@ headers = \
 	$(ldusinc)/rbtree.h				\
 
 
-flags = -std=gnu11 -O3 -DDFSTOOLS -DCHEATCOIN -DNDEBUG -g -lpthread -lcrypto -lm -Wall -Wmissing-prototypes -Wl,--export-dynamic
+flags = -std=gnu11 -O3 -DDFSTOOLS -DCHEATCOIN -DNDEBUG -g -lpthread -lcrypto -lssl -lm -Wall -Wmissing-prototypes -Wno-unused-result -Wl,--export-dynamic
 
 
 all: xdag
 
 xdag: $(sources) $(headers) Makefile
-	gcc -o xdag $(sources) $(flags)
+	gcc -o xdag $(sources) -DSHA256_USE_OPENSSL_TXFM -DSHA256_OPENSSL_MBLOCK $(flags)
 
 clean:
 	rm xdag
